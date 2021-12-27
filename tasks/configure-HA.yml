@@ -6,13 +6,13 @@
     dest: /etc/hosts
     marker: "# {mark} ANSIBLE MANAGED: microk8s HA Cluster Hosts"
     content: |
-      {% for host in groups[microk8s_group_HA] %}
+      {% for host in groups[microk8s_group_ha] %}
       {{ hostvars[host].ansible_default_ipv4.address }} {{ hostvars[host].ansible_hostname }}
       {% endfor %}
 
 - name: Find the designated host
   set_fact:
-    designated_host: '{{ (groups[microk8s_group_HA]|sort)[0] }}'
+    designated_host: '{{ (groups[microk8s_group_ha]|sort)[0] }}'
 
 - block:
   - name: Waiting for microk8s to be ready on microk8s host master
@@ -22,7 +22,7 @@
     changed_when: false
 
   - name: Get the microk8s join command from the microk8s master
-    shell: "microk8s add-node | grep -E -m1 'microk8s join {{ microk8s_ip_regex_HA }}'"
+    shell: "microk8s add-node | grep -E -m1 'microk8s join {{ microk8s_ip_regex_ha }}'"
     delegate_to: "{{ designated_host }}"
     delegate_facts: true
     changed_when: false
