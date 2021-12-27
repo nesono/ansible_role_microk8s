@@ -10,6 +10,7 @@ Role to download and install [microk8s](https://microk8s.io/) the smallest, simp
         * Ubuntu
             * Xenial (16.04)
             * Bionic (18.04)
+            * Focal (20.04)
     * Arch Linux (untested)
 
 ## License
